@@ -1,0 +1,74 @@
+= 电影票电子兑换券充值接口协议(V1.0)
+
+UuyoooTicket插件,更方便的调用http://api.uuyooo.com
+
+* 全面支持uuyooo API  GET/POST操作
+* 测试环境及生产环境开发支持
+
+== 安装
+
+先安装依赖
+rest client,
+  >> ruby script/plugin install git://github.com/adamwiggins/rest-client.git
+crack  
+  >> ruby script/plugin install git://github.com/jnunemaker/crack.git
+
+配置config目录下的ticket.yml,必须设置
+development:
+      businessId: xxxxxx
+      key: xxxxx
+      format: xml
+      apis:
+         queryTicket: http://api.uuyooo.com/ticket/queryTicket.ashx?
+         queryFilm: http://api.uuyooo.com/ticket/queryFilm.ashx?
+         buyFilm: http://api.uuyooo.com/ticket/buyFilm.ashx?
+      md5infokeys:
+         queryTicket:
+            - businessId
+            - goodsId
+            - key
+         queryFilm:
+            - businessId
+            - goodsId
+            - key
+         buyFilm:
+            - businessId
+            - goodsId
+            - goodsNum
+            - transSeq
+            - time
+            - userPhone
+            - key
+== 使用 
+
+  $ OpenkkTicket.get_with('queryTicket',{:goodsId=>"xxxxxx"})
+  # 需要调用的方法名和这个方法的必要参数
+   "http://api.uuyooo.com/ticket/queryTicket.ashx?goodsId=xxxxxx&businessId=xxxxxx&md5Info=xxxxxx"
+    =============================================================================================
+    result = RestClient.get(generate_url(method,pra),:content_type => 'text/html; charset=UTF-8')
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    "<?xml version=\"1.0\" encoding=\"UTF-8\"?><goodsInfo><errMsg></errMsg><retCode>
+    1</retCode><goods><goodsId>61001200027</goodsId><goodsName>xxxxxx</
+    goodsName><perValue>27</perValue><inPrice>25.6500</inPrice><inNum>10</inNum><amo
+    unts>1</amounts><classType>1</classType><endTime>2011-11-29 10:15:46</endTime></
+    goods></goodsInfo>"
+
+    =============================================================================================
+    parse_result(result):
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    {"goodsInfo"=>{"goods"=>{"perValue"=>"27", "goodsName"=>"xxxxxx", "
+    inNum"=>"10", "inPrice"=>"25.6500", "amounts"=>"1", "goodsId"=>"xxxxxx", "e
+    ndTime"=>"2011-11-29 10:15:46", "classType"=>"1"}, "retCode"=>"1", "errMsg"=>nil
+    }}
+
+    or>>
+
+    error messages:
+    {"orderInfo"=>{"retCode"=>"1003", "errMsg"=>"xxxxxx"}}
+
+   =================================================================================================
+
+== Changes
+1.测试生产环境下开发调用,成功 ->done
+
+Copyright (c) 2009 [author - foyoto@gmail.com], released under the MIT license

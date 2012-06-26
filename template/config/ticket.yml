@@ -1,0 +1,33 @@
+development:
+  businessId: U605605
+  key: FB2590AC7C948D5A7B027B404E2A4EAB
+  format: xml
+  apis:
+     queryTicket: http://api.uuyooo.com/ticket/queryTicket.ashx?
+     queryFilm: http://api.uuyooo.com/ticket/queryFilm.ashx?
+     buyFilm: http://api.uuyooo.com/ticket/buyFilm.ashx?
+  md5infokeys:
+     queryTicket:
+        - businessId
+        - goodsId
+        - key
+     queryFilm:
+        - businessId
+        - goodsId
+        - key
+     buyFilm:
+        - businessId
+        - goodsId
+        - goodsNum
+        - transSeq
+        - time
+        - userPhone
+        - key
+production:
+  businessId: U605605
+  key: FB2590AC7C948D5A7B027B404E2A4EAB
+  format: xml
+  methods:
+     queryTicket: http://api.uuyooo.com/ticket/queryTicket.ashx?
+     queryFilm: http://api.uuyooo.com/ticket/queryFilm.ashx?
+     buyFilm: http://api.uuyooo.com/ticket/buyFilm.ashx?
